@@ -36,6 +36,21 @@ RSpec.describe StringCalculator do
       expect(calculator.add("//|\n1|2|3")).to eq(6)
       expect(calculator.add("//&\n1&2&3")).to eq(6)
     end
+
+    it 'should return sum for numbers ignoring any number greater than 1000' do
+      expect(calculator.add("1,2,3,1003")).to eq(6)
+      expect(calculator.add("1,2,3,2000")).to eq(6)
+    end
+
+    it 'should return sum for numbers ignoring any number greater than 1000 and newline delimiters' do
+      expect(calculator.add("1\n2\n3,1003")).to eq(6)
+      expect(calculator.add("1\n2,3,2000")).to eq(6)
+    end
+
+    it 'should return sum for numbers ignoring any number greater than 1000 and custom delimiters' do
+      expect(calculator.add("//;\n1;2;2000")).to eq(3)
+      expect(calculator.add("//*\n1*2*3;1002")).to eq(6)
+    end
   end
 
   describe '#negative exception' do
