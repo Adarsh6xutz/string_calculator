@@ -52,5 +52,19 @@ RSpec.describe StringCalculator do
                                                   "negative numbers not allowed: -4,-5"
                                                 )
     end
+
+    it 'Should raise exception with all negative numbers in message ignoring the newline delimiter' do
+      expect { calculator.add("2\n-4\n3\n-5,7") }.to raise_error(
+                                                  StringCalculator::NegativesNotAllowedException,
+                                                  "negative numbers not allowed: -4,-5"
+                                                )
+    end
+
+    it 'Should raise exception with all negative numbers in message ignoring the custom delimiter' do
+      expect { calculator.add("//;\n1;2;-3") }.to raise_error(
+                                                       StringCalculator::NegativesNotAllowedException,
+                                                       "negative numbers not allowed: -3"
+                                                     )
+    end
   end
 end
