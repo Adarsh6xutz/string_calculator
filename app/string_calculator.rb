@@ -1,12 +1,13 @@
 class StringCalculator
   class NegativesNotAllowedException < StandardError; end
+  MAX_NUMBER = 1000
 
   def add(numbers)
     return 0 if numbers.empty?
 
     numbers_array = sanitized_numbers(numbers)
     check_for_negatives(numbers_array)
-    numbers_array.sum
+    numbers_array.select{ |n| n < MAX_NUMBER }.sum
   end
 
   private
@@ -15,9 +16,9 @@ class StringCalculator
     if numbers.start_with?("//")
       delimiter = numbers[2]
       numbers_part = numbers.split("\n", 2)[1]
-      numbers_part.gsub(delimiter, ",").split(',').map(&:to_i).select{ |n| n < 1000 }
+      numbers_part.gsub(delimiter, ",").split(',').map(&:to_i)
     else
-      numbers.gsub("\n", ",").split(',').map(&:to_i).select{ |n| n < 1000 }
+      numbers.gsub("\n", ",").split(',').map(&:to_i)
     end
   end
 
