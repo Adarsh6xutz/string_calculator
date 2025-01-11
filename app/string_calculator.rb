@@ -1,4 +1,6 @@
 class StringCalculator
+  class NegativesNotAllowedException < StandardError; end
+
   def add(numbers)
     return 0 if numbers.empty?
 
