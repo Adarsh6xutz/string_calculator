@@ -14,14 +14,20 @@ RSpec.describe StringCalculator do
       expect(calculator.add("5")).to eq(5)
     end
 
-    it 'returns sum for two numbers' do
+    it 'Should return sum for two numbers' do
       expect(calculator.add("1,2")).to eq(3)
       expect(calculator.add("5,7")).to eq(12)
     end
 
-    it 'returns sum for multiple numbers' do
+    it 'Should return sum for multiple numbers' do
       expect(calculator.add("1,2,3")).to eq(6)
       expect(calculator.add("5,7,8,10")).to eq(30)
+    end
+
+    it 'Should return sum for numbers ignoring new line delimiter' do
+      expect(calculator.add("1\n2,3")).to eq(6)
+      expect(calculator.add("1,2\n3")).to eq(6)
+      expect(calculator.add("1\n2\n3")).to eq(6)
     end
   end
 end
