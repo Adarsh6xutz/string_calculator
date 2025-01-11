@@ -15,9 +15,9 @@ class StringCalculator
     if numbers.start_with?("//")
       delimiter = numbers[2]
       numbers_part = numbers.split("\n", 2)[1]
-      numbers_part.gsub(delimiter, ",").split(',').map(&:to_i)
+      numbers_part.gsub(delimiter, ",").split(',').map(&:to_i).select{ |n| n < 1000 }
     else
-      numbers.gsub("\n", ",").split(',').map(&:to_i)
+      numbers.gsub("\n", ",").split(',').map(&:to_i).select{ |n| n < 1000 }
     end
   end
 
