@@ -7,7 +7,9 @@ class StringCalculator
 
     numbers_array = sanitized_numbers(numbers)
     check_for_negatives(numbers_array)
-    numbers_array.select{ |n| n < MAX_NUMBER }.sum
+    return  without_max_number(numbers_array).sum if @delimiter != '*'
+
+    without_max_number(numbers_array).inject(&:*)
   end
 
   private
@@ -15,6 +17,7 @@ class StringCalculator
   def sanitized_numbers(numbers)
     if numbers.start_with?("//")
       delimiter = numbers[2]
+      set_delimiter(delimiter)
       numbers_part = numbers.split("\n", 2)[1]
       numbers_part.gsub(delimiter, ",").split(',').map(&:to_i)
     else
@@ -25,5 +28,13 @@ class StringCalculator
   def check_for_negatives(numbers)
     negatives = numbers.select { |n| n < 0 }
     raise NegativesNotAllowedException, "negative numbers not allowed: #{negatives.join(',')}" if negatives.any?
+  end
+
+  def set_delimiter(delimiter)
+    @delimiter = delimiter
+  end
+
+  def without_max_number(numbers)
+    numbers.select{ |n| n < MAX_NUMBER }
   end
 end
